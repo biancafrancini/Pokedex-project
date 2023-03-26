@@ -8,7 +8,6 @@ export const HomePage = () => {
   const [inputPokemon, setInputPokemon] = useState("");
   const [visibleData, setVisibleData] = useState("");
   const [pokemonCart, setPokemonCart] = useState([]);
-  const [err, setErr] = useState(false);
 
   const showPokemonCard = async () => {
     try {
@@ -18,7 +17,6 @@ export const HomePage = () => {
       setVisibleData(response.data);
       //console.log(visibleData.id);
     } catch (error) {
-      setErr(true);
       console.log(error);
     }
   };
@@ -38,23 +36,22 @@ export const HomePage = () => {
     setInputPokemon("");
 
     } catch (error) {
-      setErr(true);
       console.log(error);
     } 
   };
 
   const handleDeletePokemon = async (id) => {
     try {
-      const startedIndex = pokemonCart.findIndex((pokemon) => pokemon.id !== id);
-      const newPokemonCart = [...pokemonCart].splice(1,startedIndex);
+      const pokemonIndex = pokemonCart.findIndex((pokemon) => pokemon.id === id);
+      const _pokemonCart = [...pokemonCart]
+      _pokemonCart.splice(pokemonIndex,1);
 
-      setPokemonCart(newPokemonCart);
+      setPokemonCart(_pokemonCart);
 
       await axios.delete(`http://localhost:3001/pokemons/${id}`)
       //console.log(response.data)
 
     } catch (error) {
-      setErr(true);
       console.log(error)
     } 
   };
