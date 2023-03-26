@@ -38,6 +38,7 @@ export const HomePage = () => {
     setInputPokemon("");
 
     } catch (error) {
+      setErr(true);
       console.log(error);
     } 
   };
