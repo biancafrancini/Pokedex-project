@@ -8,7 +8,6 @@ export const HomePage = () => {
   const [inputPokemon, setInputPokemon] = useState("");
   const [visibleData, setVisibleData] = useState("");
   const [pokemonCart, setPokemonCart] = useState([]);
-  const [error, setError] = useState(null);
 
   const showPokemonCard = async () => {
     try {
@@ -32,7 +31,7 @@ export const HomePage = () => {
     const newPokemon = JSON.parse(response.config.data);
 
     setPokemonCart([...pokemonCart, newPokemon]);
-    console.log(newPokemon);
+    //console.log(newPokemon);
     setInputPokemon("");
   };
 
