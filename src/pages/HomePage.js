@@ -8,6 +8,7 @@ export const HomePage = () => {
   const [inputPokemon, setInputPokemon] = useState("");
   const [visibleData, setVisibleData] = useState("");
   const [pokemonCart, setPokemonCart] = useState([]);
+  const [err, setErr] = useState(false);
 
   const showPokemonCard = async () => {
     try {
@@ -15,14 +16,16 @@ export const HomePage = () => {
         `http://localhost:3001/pokemons/${inputPokemon}`
       );
       setVisibleData(response.data);
-      console.log(visibleData.id);
+      //console.log(visibleData.id);
     } catch (error) {
+      setErr(true);
       console.log(error);
     }
   };
 
   const handleAddPokemon = async () => {
-    const response = await axios.post(`http://localhost:3001/pokemons`, {
+    try {
+      const response = await axios.post(`http://localhost:3001/pokemons`, {
       id: visibleData.id,
       name: visibleData.name,
       image: visibleData.image,
@@ -33,17 +36,26 @@ export const HomePage = () => {
     setPokemonCart([...pokemonCart, newPokemon]);
     //console.log(newPokemon);
     setInputPokemon("");
+
+    } catch (error) {
+      console.log(error);
+    } 
   };
 
   const handleDeletePokemon = async (id) => {
+    try {
+      const startedIndex = pokemonCart.findIndex((pokemon) => pokemon.id !== id);
+      const newPokemonCart = [...pokemonCart].splice(1, startedIndex);
 
-    const startedIndex = pokemonCart.findIndex((pokemon) => pokemon.id !== id);
-    const newPokemonCart = [...pokemonCart].splice(1, startedIndex);
+      setPokemonCart(newPokemonCart);
 
-    setPokemonCart(newPokemonCart);
+      await axios.delete(`http://localhost:3001/pokemons/${id}`)
+      //console.log(response.data)
 
-    await axios.delete(`http://localhost:3001/pokemons/${id}`)
-    //console.log(response.data)
+    } catch (error) {
+      setErr(true);
+      console.log(error)
+    } 
   };
 
   return (
@@ -65,7 +77,6 @@ export const HomePage = () => {
           Search
         </button>
       </div>
-
       <div className="data-container">
         {visibleData && (
           <div className="flex place-items-center m-8">
