@@ -67,7 +67,6 @@ export const HomePage = () => {
       </div>
 
       <div className="data-container">
-        <div className="empty-div"></div>
         {visibleData && (
           <div className="flex place-items-center m-8">
             <span>{visibleData.name}</span>
@@ -78,9 +77,9 @@ export const HomePage = () => {
           </div>
         )}
         {/*!error && visibleData === undefined && <div>Sorry, this Pokemon is not available</div>*/}
-
+      <div className="empty-div"></div>
         <div className="cart-container flex flex-col m-2">
-          <h3 className="flex font-bold border border-4 rounded-lg border-red-500 w-fit p-4">
+          <h3 className="flex font-bold border border-2 rounded-lg border-red-500 w-fit p-4">
             Your Pokedex
             <img src={pokeball} alt="pokeball-icon" className="pokeball mx-2" />
           </h3>
