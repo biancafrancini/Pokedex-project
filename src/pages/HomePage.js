@@ -37,10 +37,14 @@ export const HomePage = () => {
   };
 
   const handleDeletePokemon = async (id) => {
+
     const startedIndex = pokemonCart.findIndex((pokemon) => pokemon.id !== id);
-    const newPokemonCart = [...pokemonCart].splice(startedIndex, 1);
+    const newPokemonCart = [...pokemonCart].splice(1, startedIndex);
 
     setPokemonCart(newPokemonCart);
+
+    await axios.delete(`http://localhost:3001/pokemons/${id}`)
+    //console.log(response.data)
   };
 
   return (
@@ -77,18 +81,18 @@ export const HomePage = () => {
         {/*!error && visibleData === undefined && <div>Sorry, this Pokemon is not available</div>*/}
 
         <div className="cart-container flex flex-col m-2">
-          <h3 className="flex items-left font-bold border border-4 rounded-lg border-red-500 w-fit p-4">
-            Your Pokedex{" "}
+          <h3 className="flex font-bold border border-4 rounded-lg border-red-500 w-fit p-4">
+            Your Pokedex
             <img src={pokeball} alt="pokeball-icon" className="pokeball mx-2" />
           </h3>
-          {pokemonCart.map((creature, index) => (
+          {pokemonCart.map((pokemon, index) => (
             <div key={index} className="flex items-center">
-              <img src={creature.image} alt="pokemon saved pic" />
-              <p>{creature.name}</p>
+              <img src={pokemon.image} alt="pokemon saved pic" />
+              <p>{pokemon.name}</p>
               <button
                 type="delete"
-                className="delete-creature-btn mx-4 p-2 border border-2 rounded-lg border-red-500"
-                /*onClick={() => handleDeletePokemon(creature.id)}*/
+                className="delete-pokemon-btn mx-4 p-2 border border-2 rounded-lg border-red-500"
+                onClick={() => handleDeletePokemon(pokemon.id)}
               >
                 Delete
               </button>
