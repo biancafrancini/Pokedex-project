@@ -46,7 +46,7 @@ export const HomePage = () => {
   const handleDeletePokemon = async (id) => {
     try {
       const startedIndex = pokemonCart.findIndex((pokemon) => pokemon.id !== id);
-      const newPokemonCart = [...pokemonCart].splice(1, startedIndex);
+      const newPokemonCart = [...pokemonCart].splice(1,startedIndex);
 
       setPokemonCart(newPokemonCart);
 
@@ -67,13 +67,13 @@ export const HomePage = () => {
           value={inputPokemon}
           placeholder="Search pokemons..."
           onChange={(e) => setInputPokemon(() => e.target.value)}
-          className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="block w-full p-4 pl-10 text-sm text-gray-900 border border-red-300 rounded-lg bg-gray-300 focus:ring-red-500 focus:border-red-500 dark:bg-gray-500 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
           required
         />
         <button
           type="submit"
           onClick={showPokemonCard}
-          className="text-white mx-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white mx-2 bg-red-400 hover:ring-4 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:focus:ring-red-700 dark:hover:ring-red-700"
         >
           Search
         </button>
@@ -83,16 +83,15 @@ export const HomePage = () => {
           <div className="flex place-items-center m-8">
             <span>{visibleData.name}</span>
             <img className="mx-4" src={visibleData.image} alt="pokemon pic" />
-            <button type="submit" onClick={handleAddPokemon}>
-              Add to your cart
+            <button type="submit" className="delete-add-pokemon-btn" onClick={handleAddPokemon}>
+              Add to your Pokédex
             </button>
           </div>
         )}
-        {/*!error && visibleData === undefined && <div>Sorry, this Pokemon is not available</div>*/}
       <div className="empty-div"></div>
         <div className="cart-container flex flex-col m-2">
-          <h3 className="flex font-bold border border-2 rounded-lg border-red-500 w-fit p-4">
-            Your Pokedex
+          <h3 className="flex font-bold border border-2 border-red-500 rounded-lg w-fit p-4 bg-gray-200">
+            Your Pokédex
             <img src={pokeball} alt="pokeball-icon" className="pokeball mx-2" />
           </h3>
           {pokemonCart.map((pokemon, index) => (
@@ -101,7 +100,7 @@ export const HomePage = () => {
               <p>{pokemon.name}</p>
               <button
                 type="delete"
-                className="delete-pokemon-btn mx-4 p-2 border border-2 rounded-lg border-red-500"
+                className="delete-add-pokemon-btn"
                 onClick={() => handleDeletePokemon(pokemon.id)}
               >
                 Delete
