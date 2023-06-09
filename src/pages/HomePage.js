@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Background } from "../components/Background";
 import pokeball from "../images/pokeball.png";
 import { SiPokemon } from "react-icons/si";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 
 import "../styles/homepage.css";
 
@@ -12,6 +12,10 @@ export const HomePage = () => {
   const [visibleData, setVisibleData] = useState("");
   const [pokemonCart, setPokemonCart] = useState([]);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useTransform(y, [-100, 100], [-30, 30]);
+  const rotateY = useTransform(x, [100, -100], [30, -30]);
 
   const showPokemonCard = async () => {
     try {
@@ -90,7 +94,7 @@ export const HomePage = () => {
       <div className="cart-container absolute top-0 right-0 flex flex-col items-end">
         <motion.div
           onClick={dropdownMenu}
-          className="dropdown-menu flex font-bold text-yellow-300 shadow shadow-yellow-200 p-4 px-8 m-4 rounded-lg"
+          className="dropdown-menu flex font-bold text-yellow-300 shadow shadow-yellow-200 p-4 px-8 m-2 rounded-lg"
         >
           <img src={pokeball} alt="pokeball-icon" className="pokeball mr-4" />
           <h3>Your Pokédex</h3>
@@ -99,16 +103,16 @@ export const HomePage = () => {
           initial="exit"
           animate={isMouseEntered ? "enter" : "exit"}
           variants={animatedMenuOptions}
-          className="pokemonCart-container rounded-md px-2 mr-4"
+          className="pokemonCart-container grid grid-cols-2 place-items-center rounded-md px-4"
         >
           {pokemonCart.map((pokemon, index) => (
             <div
               key={index}
-              className="flex items-center border-b-2 border-gray-200"
+              className="flex items-center border-b-2 border-gray-200 bg-gray-600 rounded-md px-4"
             >
-              <img src={pokemon.image} alt="pokemon saved pic" />
-              <span className="flex flex-col items-start pl-2 ">
-                <p className="font-bold py-2 text-red-500 text-xs">
+              <img className="object-contain max-w-20 max-h-20 mr-2" src={pokemon.image} alt="pokemon saved pic" />
+              <span className="flex flex-col items-start">
+                <p className="font-bold py-2 text-yellow-500 text-xs">
                   {pokemon.name.toUpperCase()}
                 </p>
                 <button
@@ -136,7 +140,7 @@ export const HomePage = () => {
               value={inputPokemon}
               placeholder="Search pokemons..."
               onChange={(e) => setInputPokemon(() => e.target.value)}
-              className="block w-full p-4 pl-10 text-sm text-gray-900 border rounded-lg bg-gray-300 focus:outline-none dark:bg-gray-600 dark:border-gray-800 dark:placeholder-gray-200 dark:text-white dark:focus:ring-yellow-800 dark:focus:border-yellow-500"
+              className="block w-full p-4 pl-10 text-sm text-gray-900 border rounded-lg bg-gray-300 focus:outline-none dark:bg-gray-500 dark:border-gray-800 dark:placeholder-gray-200 dark:text-white dark:focus:ring-yellow-800 dark:focus:border-yellow-500"
               required
             />
             <button
@@ -148,16 +152,26 @@ export const HomePage = () => {
             </button>
           </div>
           <div className="empty-div h-52"></div>
-          <div className="data-container flex items-center h-52">
+          <div
+          style={{perspective: 2000}}>
+          <motion.div 
+          style={{x, y, rotateX, rotateY, z:100}}
+          drag
+          dragElastic={0.18}
+          dragConstrains={{top: 0, left: 0, right: 0, bottom: 0}}
+          whileHover={{cursor: "grabbing"}}
+          className="data-container flex items-center h-52">
             {visibleData && (
-              <div className="card max-w-sm bg-white p-8 border-2 border-red-200 rounded-lg shadow dark:bg-gray-700 dark:border-yellow-500">
+              <motion.div 
+              whileHover={{scaleZ: 1.2}}
+              className="card max-w-sm bg-white p-8 border-2 border-red-200 rounded-lg shadow dark:bg-gray-700 dark:border-yellow-500">
                 <img
                   className="rounded-lg bg-white w-full object-center"
                   src={visibleData.image}
                   alt="pokemon pic"
                 />
                 <div className="flex flex-col items-center">
-                  <h3 className="p-5 my-6 text-lg font-bold text-center text-gray-900 dark:text-white">
+                  <h3 className="p-5 my-6 text-lg font-bold text-center dark:text-yellow-200">
                     {visibleData.name.toUpperCase()}
                   </h3>
                   <button
@@ -168,8 +182,9 @@ export const HomePage = () => {
                     Add to Pokédex
                   </button>
                 </div>
-              </div>
+              </motion.div>
             )}
+          </motion.div>
           </div>
         </div>
       </div>
