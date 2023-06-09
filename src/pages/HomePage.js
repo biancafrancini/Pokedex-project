@@ -23,7 +23,7 @@ export const HomePage = () => {
         `http://localhost:3001/pokemons/${inputPokemon}`
       );
 
-      console.log(response.data);
+      //console.log(response.data);
       setVisibleData(response.data);
     } catch (error) {
       console.log(error);
@@ -110,7 +110,11 @@ export const HomePage = () => {
               key={index}
               className="flex items-center border-b-2 border-gray-200 bg-gray-600 rounded-md px-4"
             >
-              <img className="object-contain max-w-20 max-h-20 mr-2" src={pokemon.image} alt="pokemon saved pic" />
+              <img
+                className="object-contain max-w-20 max-h-20 mr-2"
+                src={pokemon.image}
+                alt="pokemon saved pic"
+              />
               <span className="flex flex-col items-start">
                 <p className="font-bold py-2 text-yellow-500 text-xs">
                   {pokemon.name.toUpperCase()}
@@ -152,39 +156,40 @@ export const HomePage = () => {
             </button>
           </div>
           <div className="empty-div h-52"></div>
-          <div
-          style={{perspective: 2000}}>
-          <motion.div 
-          style={{x, y, rotateX, rotateY, z:100}}
-          drag
-          dragElastic={0.18}
-          dragConstrains={{top: 0, left: 0, right: 0, bottom: 0}}
-          whileHover={{cursor: "grabbing"}}
-          className="data-container flex items-center h-52">
-            {visibleData && (
-              <motion.div 
-              whileHover={{scaleZ: 1.2}}
-              className="card max-w-sm bg-white p-8 border-2 border-red-200 rounded-lg shadow dark:bg-gray-700 dark:border-yellow-500">
-                <img
-                  className="rounded-lg bg-white w-full object-center"
-                  src={visibleData.image}
-                  alt="pokemon pic"
-                />
-                <div className="flex flex-col items-center">
-                  <h3 className="p-5 my-6 text-lg font-bold text-center dark:text-yellow-200">
-                    {visibleData.name.toUpperCase()}
-                  </h3>
-                  <button
-                    type="submit"
-                    className="delete-add-pokemon-btn font-bold text-gray-800 w-34 h-15 rounded-full p-2"
-                    onClick={handleAddPokemon}
-                  >
-                    Add to Pokédex
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </motion.div>
+          <div style={{ perspective: 2000 }}>
+            <motion.div
+              style={{ x, y, rotateX, rotateY, z: 100 }}
+              drag
+              dragElastic={0.18}
+              dragConstrains={{ top: 0, left: 0, right: 0, bottom: 0 }}
+              whileHover={{ cursor: "grabbing" }}
+              className="data-container flex items-center h-52"
+            >
+              {visibleData && (
+                <motion.div
+                  whileHover={{ scaleZ: 1.2 }}
+                  className="card max-w-sm bg-white p-8 border-2 border-red-200 rounded-lg shadow dark:bg-gray-700 dark:border-yellow-500"
+                >
+                  <img
+                    className="rounded-lg bg-white w-full object-center"
+                    src={visibleData.image}
+                    alt="pokemon pic"
+                  />
+                  <div className="flex flex-col items-center">
+                    <h3 className="p-5 my-6 text-lg font-bold text-center dark:text-yellow-200">
+                      {visibleData.name.toUpperCase()}
+                    </h3>
+                    <button
+                      type="submit"
+                      className="delete-add-pokemon-btn font-bold text-gray-800 w-34 h-15 rounded-full p-2"
+                      onClick={handleAddPokemon}
+                    >
+                      Add to Pokédex
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </motion.div>
           </div>
         </div>
       </div>
