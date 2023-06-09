@@ -2,15 +2,21 @@
   width: 20px;
 }
 
+.pokemonCart-container{
+  background-color:aliceblue;
+}
+
 .empty-div {
   max-height: 150px;
 }
 
 .delete-add-pokemon-btn {
-    margin: 20px;
-    padding: 5px;
     border: 2px solid red;
-    border-radius: 10%;
-    background-color:bisque;
-    font-weight: bold;
+    background-color:rgb(255, 236, 212);
 }
+
+.visible-data-pic{
+  background-color:rgba(227, 201, 201, 0.4);
+}
+
+
